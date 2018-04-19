@@ -1,12 +1,10 @@
 package code.snippet
 
-import  net.liftweb._
-import http._
-import js._
-import JsCmds._
-import JE._
-
 import code.comet.ChatServer
+import net.liftweb.http._
+import net.liftweb.http.js.JsCmds._
+
+import scala.xml.NodeSeq
 
 object ChatIn {
   /**
@@ -17,8 +15,11 @@ object ChatIn {
    * to the ChatServer and then returns JavaScript which
    * clears the input.
    */
-  def render = SHtml.onSubmit(s => {
-    ChatServer ! s
-    SetValById("chat_in", "")
-  })
+  def render: (NodeSeq) => NodeSeq = 
+    SHtml.onSubmit(
+      s => {
+        ChatServer ! s            //BK 2 send message to the Actor(ChatServer)
+        SetValById("chat_in", "") //2 clear the input
+      }
+    )
 }

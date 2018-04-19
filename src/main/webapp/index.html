@@ -10,23 +10,28 @@
 <body class="lift:content_id=main">
 
     <div id="main" class="lift:surround?with=default;at=content">
-        <!-- the behavior of the div -->
-        <div class="lift:comet?type=Chat">
-            Some chat messages
+        <!-- 
+            the behavior of the div, 
+            1 the `comet` snippet looks for a class named `Chat` that extends `CometActor`
+            2 enables the mechanics of pushing content from the CometActor to the browser when the state of the CometActor changes 
+        -->
+        <div class="lift:comet?type=Chat"> 
+            This is a chat channel, all of you can talk here !
             <ul>
-                <li>A message</li>
-                <li class="clearable">Another message</li>
-                <li class="clearable">A third message</li>
+                <li>1st message</li>
+                <li class="clearable">2rd message</li>
+                <li class="clearable">3rd message</li>
             </ul>
         </div>
     
         <div>
             <form class="lift:form.ajax">
-                <input class="lift:ChatIn" id="chat_in"/>
-                <input type="submit" value="Say Something"/>
+                <input class="lift:ChatIn" id="chat_in"/>   <!-- BK 1 ajax.form get the value  -->
+                <input type="submit" value="Write -> Press !"/>
             </form>
         </div>
     </div>
+
 </body>
 
 

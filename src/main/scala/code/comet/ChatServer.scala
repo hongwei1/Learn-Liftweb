@@ -14,8 +14,7 @@ object ChatServer extends LiftActor with ListenerManager {
    * so it can be shared with lots of threads without any
    * danger or locking.
    */
-  //  def createUpdate = msgs
-  def createUpdate = msgs
+  override def createUpdate = msgs // when call updateListeners(), will call this method
 
   /**
    * process messages that are sent to the Actor.  In
@@ -24,6 +23,9 @@ object ChatServer extends LiftActor with ListenerManager {
    * messages, and then update all the listeners.
    */
   override def lowPriority = {
-    case s: String => msgs :+= s; updateListeners()
+    case s: String => {
+      msgs :+= s; 
+      updateListeners()// BK 3 Server get the news and render to listeners 
+    }
   }
 }
