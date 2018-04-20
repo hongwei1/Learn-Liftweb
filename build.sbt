@@ -1,4 +1,4 @@
-name := "Chat-Tutorial"
+name := "LearnLiftweb"
 
 version := "0.1.0"
 
