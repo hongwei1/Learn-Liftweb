@@ -1,26 +1,60 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta content="text/html; charset=UTF-8" http-equiv="content-type" />
-    <title>Home</title>
-  </head>
-  <body class="lift:content_id=main">
-    <div id="main" class="lift:surround?with=default&at=content">
-      <div>Hello World.  Welcome to your Lift application.</div>
-      <div>Check out a page with <a href="/param/foo">query parameters</a>.</div>
 
-      <span class="lift:embed?what=_embedme">
-        replaced with embedded content
-      </span>
+<!--
+3.3.2 Dynamic content
+	The template is a legal HTML page. 
+	But there are marker in the page to tell Lift how to interpret the HTML.
+	
+	If the <body> tag contains a class attribute lift:content_id=xxxx, 
+	then Lift will ﬁnd the element with the matching id and use that 
+	as the starting point for rendering the page. 
+	This allows your designers to edit and maintain the pages 
+	in the same hierarchy that you use for your application.
+-->
 
-      <div>
-	<ul>
-	  <li>Recursive: <a href="/recurse/one">First snippet</a></li>
-	  <li>Recursive: <a href="/recurse/two">Second snippet</a></li>
-	  <li>Recursive: <a href="/recurse/both">Both snippets</a></li>
-	</ul>
-      </div>
-    </div>
-  </body>
+<head>
+	<meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
+	<title>Home</title>
+</head>
+
+
+<body class="lift:content_id=main">
+<!--3.3.3 Surround and page chrome
+	The class attribute lift:surround?with=default;at=content 
+	instructs Lift to surround the current Element with the template named default.html 
+	(typically located in the /templates- hidden/ directory), 
+	and place the current page’s content at the element with the “content” id.
+
+	This pattern allows us to wrap a common chrome around every page on our site. 
+	You can also specify different template to use for surrounding. 
+	Further, the template itself can choose different templates to use for surrounding.
+	
+	Set the `index.html` into default.html, at the it=content position !!!!
+-->
+	<div id="main" class="lift:surround?with=default&at=content">
+		
+		<div>Hello World. Welcome to your Lift application.</div>
+		
+		<div>Check out a page with <a href="/param/foo">query parameters</a>.</div>
+		
+		<!--3.3.4 Embed
+		Here we embed the `_embedme.html` into the index.html postion.
+		-->
+		<span class="lift:embed?what=_embedme">
+			replaced with embedded content
+		</span>
+		
+		<div>
+			<ul>
+				<li>Recursive: <a href="/recurse/one">First snippet</a></li>
+				<li>Recursive: <a href="/recurse/two">Second snippet</a></li>
+				<li>Recursive: <a href="/recurse/both">Both snippets</a></li>
+			</ul>
+		</div>
+	</div>
+</body>
+
+
 </html>
 

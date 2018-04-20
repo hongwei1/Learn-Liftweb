@@ -1,14 +1,31 @@
 <!DOCTYPE html>
 <html>
+
   <head>
     <meta content="text/html; charset=UTF-8" http-equiv="content-type" />
     <title>Dynamic</title>
   </head>
+  
   <body class="lift:content_id=main">
     <div id="main" class="lift:surround?with=default;at=content">
       This page has dynamic content.
+      <!--3.4.2 Snippet resolution
+      For now, the simplest mechanism is to have a class 
+      or object in the snippet package that matches the snippet name.
+
+      1st -- `lift:HelloWorld` will look for the `code.snippet.HelloWorld` class 
+      and invoke the `render` method.
+      
+      2rd -- `lift:HelloWorld.hongweiOwnRender` will look for the `code.snippet.HelloWorld` class 
+      and invoke the `hongweiOwnRender` method.
+      -->
       The current time is <span class="lift:HelloWorld">now</span>.
+      <br>
+      Hongwei's own method is <span class="lift:HelloWorld.hongweiOwnRender"> xxx </span>.
+
     </div>
   </body>
+
+
 </html>
 

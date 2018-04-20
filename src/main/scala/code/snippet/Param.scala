@@ -1,8 +1,8 @@
 package code
 package snippet
 
-import net.liftweb._
 import net.liftweb.common._
+import net.liftweb.sitemap.Menu.{ParamMenuable, WithSlash}
 import net.liftweb.sitemap._
 import net.liftweb.util.Helpers._
 
@@ -16,9 +16,16 @@ class ShowParam(pi: ParamInfo)  {
 
 object Param {
   // Create a menu for /param/somedata
-  val menu = Menu.param[ParamInfo]("Param", "Param", 
-                                   s => Full(ParamInfo(s)), 
-                                   pi => pi.theParam) / "param"
+  //  When the URL /param/dogfood or /param/fruitbat is presented, 
+  // it matches the Loc and the function (s => Full(ParamInfo(s))) is invoked. 
+  // If it returns a Full Box, the value is placed in the Loc’s currentValue.
+  val menu: ParamMenuable[ParamInfo] = Menu.param[ParamInfo](  //3.2.7 Parameters
+    "Param", 
+    "Param",
+    s => Full(ParamInfo(s)), // Loc’s currentValue.
+    pi => pi.theParam
+  )/ "param"
+  
   lazy val loc = menu.toLoc
 
   def render = "*" #> loc.currentValue.map(_.theParam)

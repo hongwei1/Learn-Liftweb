@@ -1,0 +1,1 @@
+val map: Option[String] = None.map(_.toString)
