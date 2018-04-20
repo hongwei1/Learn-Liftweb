@@ -1,14 +1,10 @@
 package code
 package snippet
 
-import lib._
-
 import net.liftweb._
-import util.Helpers._
-import common._
-import http._
-import sitemap._
-import java.util.Date
+import net.liftweb.common._
+import net.liftweb.sitemap._
+import net.liftweb.util.Helpers._
 
 // capture the page parameter information
 case class ParamInfo(theParam: String)

@@ -1,12 +1,11 @@
 package code
 package snippet
 
-import lib._
-
 import net.liftweb._
-import util._
-import Helpers._
-import http._
+import net.liftweb.http._
+import net.liftweb.util.Helpers._
+import net.liftweb.util._
+
 import scala.xml.NodeSeq
 
 /**

@@ -1,13 +1,9 @@
 package code
 package snippet
 
-import lib._
-
 import net.liftweb._
-import http._
-import util.Helpers._
-import common._
-import java.util.Date
+import net.liftweb.http._
+import net.liftweb.util.Helpers._
 
 /**
  * A snippet that lists the name of the current page

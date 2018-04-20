@@ -1,12 +1,12 @@
 package code
 package snippet
 
-import lib._
-
-import net.liftweb._
-import util.Helpers._
-import common._
 import java.util.Date
+
+import code.lib._
+import net.liftweb._
+import net.liftweb.common._
+import net.liftweb.util.Helpers._
 
 class HelloWorld {
   lazy val date: Box[Date] = DependencyFactory.inject[Date] // inject the date

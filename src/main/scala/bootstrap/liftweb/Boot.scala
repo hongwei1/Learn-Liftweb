@@ -1,15 +1,13 @@
 package bootstrap.liftweb
 
-import net.liftweb._
-import util._
-import Helpers._
-
-import common._
-import http._
-import sitemap._
-import Loc._
-
 import code.snippet._
+import net.liftweb._
+import net.liftweb.common._
+import net.liftweb.http._
+import net.liftweb.sitemap.Loc._
+import net.liftweb.sitemap._
+import net.liftweb.util.Helpers._
+import net.liftweb.util._
 
 /**
  * A class that's instantiated early and run.  It allows the application
