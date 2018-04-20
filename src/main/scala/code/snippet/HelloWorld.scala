@@ -1,20 +1,16 @@
 package code
 package snippet
 
-import net.liftweb.util.Helpers._
+import lib._
+
+import net.liftweb._
+import util.Helpers._
+import common._
 import java.util.Date
 
-import net.liftweb.json.JsonAST
+class HelloWorld {
+  lazy val date: Box[Date] = DependencyFactory.inject[Date] // inject the date
 
-class HelloWorld extends  App{
-  lazy val date = new Date()
-//  10 seconds
-  1 hour
-  // replace the contents of the element with id "time" with the date
-  def howdy = "#time *" #> date.toString
-  md5("Hongwei")
-//  val example = ("name" -> "joe") ~ ("age" -> 35)
-//  compact(JsonAST.render(example))
-
+  def render = "* *" #> date.map(_.toString)
 }
 
