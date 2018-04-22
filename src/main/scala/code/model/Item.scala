@@ -99,7 +99,7 @@ object Item {
   def inventoryItems: Seq[Item] = items
 
   // The raw data
-  private def data = 
+  private[code] def data = 
 """[
   {"id": "1234", "name": "Cat Food",
   "description": "Yummy, tasty cat food",

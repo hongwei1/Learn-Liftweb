@@ -9,7 +9,9 @@ import http._
 import sitemap._
 import Loc._
 
+import code.snippet._
 import code.lib._
+
 
 /**
  * A class that's instantiated early and run.  It allows the application
@@ -21,13 +23,16 @@ class Boot {
     LiftRules.addToPackages("code")
 
     // Build SiteMap
-    def sitemap() = SiteMap(
-      Menu.i("Home") / "index" // the simple way to declare a menu
-      )
+    def sitemap = SiteMap(
+      Menu.i("Home") / "index",
+      SearchPage.menu,
+      AllItemsPage.menu,
+      AnItemPage.menu
+    )
 
     // set the sitemap.  Note if you don't want access control for
     // each page, just comment this line out.
-    LiftRules.setSiteMapFunc(sitemap)
+    LiftRules.setSiteMapFunc(() => sitemap)
 
     //Show the spinny image when an Ajax call starts
     LiftRules.ajaxStart =
@@ -44,20 +49,6 @@ class Boot {
     LiftRules.htmlProperties.default.set((r: Req) =>
       new Html5Properties(r.userAgent))    
 
-    // the stateless REST handlers
-    LiftRules.statelessDispatchTable.append(BasicExample.findItem)
-    LiftRules.statelessDispatchTable.append(BasicExample.extractFindItem)
-
-    // stateful versions of the same
-    // LiftRules.dispatch.append(BasicExample.findItem)
-    // LiftRules.dispatch.append(BasicExample.extractFindItem)
-
-    LiftRules.statelessDispatchTable.append(BasicWithHelper)
-    LiftRules.statelessDispatchTable.append(FullRest)
-
-    // stateful versions of the above
-    // LiftRules.dispatch.append(BasicWithHelper)
-    // LiftRules.dispatch.append(FullRest)
-
+    LiftRules.dispatch.append(ShareCart)
   }
 }
