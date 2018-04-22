@@ -3,13 +3,13 @@ package bootstrap.liftweb
 import net.liftweb._
 import util._
 import Helpers._
+
 import common._
 import http._
 import sitemap._
 import Loc._
-import code.comet.BlogAPI
-import net.liftmodules.JQueryModule
-import net.liftweb.http.js.jquery._
+
+import code.lib._
 
 /**
  * A class that's instantiated early and run.  It allows the application
@@ -17,27 +17,22 @@ import net.liftweb.http.js.jquery._
  */
 class Boot {
   def boot {
-    LiftRules.dispatch.append(BlogAPI)
     // where to search snippet
     LiftRules.addToPackages("code")
 
     // Build SiteMap
-    val entries = List(
-      Menu.i("Home") / "index", // the simple way to declare a menu
-
-      // more complex because this menu allows anything in the
-      // /static path to be visible
-      Menu(Loc("Static", Link(List("static"), true, "/static/index"),
-	       "Static Content")))
+    def sitemap() = SiteMap(
+      Menu.i("Home") / "index" // the simple way to declare a menu
+      )
 
     // set the sitemap.  Note if you don't want access control for
     // each page, just comment this line out.
-    LiftRules.setSiteMap(SiteMap(entries:_*))
+    LiftRules.setSiteMapFunc(sitemap)
 
     //Show the spinny image when an Ajax call starts
     LiftRules.ajaxStart =
       Full(() => LiftRules.jsArtifacts.show("ajax-loader").cmd)
-
+    
     // Make the spinny image go away when it ends
     LiftRules.ajaxEnd =
       Full(() => LiftRules.jsArtifacts.hide("ajax-loader").cmd)
@@ -45,20 +40,24 @@ class Boot {
     // Force the request to be UTF-8
     LiftRules.early.append(_.setCharacterEncoding("UTF-8"))
 
-    //Init the jQuery module, see http://liftweb.net/jquery for more information.
-    LiftRules.jsArtifacts = JQueryArtifacts
-    JQueryModule.InitParam.JQuery=JQueryModule.JQuery1113
-    JQueryModule.init()
+    // Use HTML5 for rendering
+    LiftRules.htmlProperties.default.set((r: Req) =>
+      new Html5Properties(r.userAgent))    
 
-//    LiftRules.securityRules = () => {
-//      SecurityRules(content = Some(ContentSecurityPolicy(
-//        scriptSources = List(
-//
-    // ContentSourceRestriction.Self),
-//        styleSources = List(
-//            ContentSourceRestriction.Self)
-//            )))
-//    }
+    // the stateless REST handlers
+    LiftRules.statelessDispatchTable.append(BasicExample.findItem)
+    LiftRules.statelessDispatchTable.append(BasicExample.extractFindItem)
+
+    // stateful versions of the same
+    // LiftRules.dispatch.append(BasicExample.findItem)
+    // LiftRules.dispatch.append(BasicExample.extractFindItem)
+
+    LiftRules.statelessDispatchTable.append(BasicWithHelper)
+    LiftRules.statelessDispatchTable.append(FullRest)
+
+    // stateful versions of the above
+    // LiftRules.dispatch.append(BasicWithHelper)
+    // LiftRules.dispatch.append(FullRest)
 
   }
 }
