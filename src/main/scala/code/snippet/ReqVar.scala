@@ -8,10 +8,11 @@ import util.Helpers._
 import scala.xml.NodeSeq
 
 /**
- * A RequestVar-based snippet
+ * A RequestVar-based snippet -- singleton. the state is kept in the RequestVars
  */
 object ReqVar {
   // define RequestVar holders for name, age, and whence
+  // are defined as singletons. they are typed and have a default value.
   private object name extends RequestVar("")
   private object age extends RequestVar("0")
   private object whence extends RequestVar(S.referer openOr "/")

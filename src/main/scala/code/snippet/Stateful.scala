@@ -10,28 +10,27 @@ import scala.xml.NodeSeq
 /**
  * A stateful snippet. The state associated with this
  * snippet is in instance variables 
+  * It can not be a singleton.Must be a class, so many instances.
  */
 class Stateful extends StatefulSnippet {
   // state unique to this instance of the stateful snippet
   private var name = ""
   private var age = "0"
 
-  // capture from whence the user came so we
-  // can send them back
+  // capture from whence the user came so we can send them back
   private val whence = S.referer openOr "/"
 
-  // StatefulSnippet requires an explicit dispatch
-  // to the method.
-  def dispatch = {case "render" => render}
+  // StatefulSnippet requires an explicit dispatch to the method.
+  override def dispatch = {case "render" => render}
 
   // associate behavior with each HTML element
   def render = 
-    "name=name" #> SHtml.text(name, name = _, "id" -> "the_name") &
-    "name=age" #> SHtml.text(age, age = _) &
+    "name=name"   #> SHtml.text(name, name = _, "id" -> "the_name", "id2" -> "the_name2", "id3" -> "the_name3") & // here ,the you can 
+    "name=age"    #> SHtml.text(age, age = _) &
     "type=submit" #> SHtml.onSubmitUnit(process)
 
   // process the form
-  private def process() =
+  private def process()= {
     asInt(age) match {
       case Full(a) if a < 13 => S.error("Too young!")
       case Full(a) => {
@@ -42,4 +41,5 @@ class Stateful extends StatefulSnippet {
       
       case _ => S.error("Age doesn't parse as a number")
     }
+  }
 }

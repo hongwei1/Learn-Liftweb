@@ -5,6 +5,12 @@
   </div>
   
   <div>
+    <!--
+    This is previous way, now we use the liftweb:OnSubmit method.
+    <form action="/dumb" method="post" class="lift:DumbForm">  == form=post
+    It sets the method and action attributes on the <form> tag: <form method="post" action="/onsubmit">.
+    
+     -->
     <form class="lift:OnSubmit?form=post">
       Name: <input name="name"><br>
       Age: <input name="age" value="0"><br>

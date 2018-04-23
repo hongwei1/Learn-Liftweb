@@ -1,20 +1,18 @@
 package code
 package snippet
 
-import net.liftweb._
-import http._
-import common._
-import util.Helpers._
-import js._
-import JsCmds._
-import JE._
-import scala.xml.NodeSeq
+import net.liftweb.common._
+import net.liftweb.http._
+import net.liftweb.http.js.JsCmds._
+import net.liftweb.http.js._
+import net.liftweb.util.CssSel
+import net.liftweb.util.Helpers._
 
 /**
  * Ajax for processing... it looks a lot like the Stateful example
  */
 object AjaxExample {
-  def render = {
+  def render: CssSel = {
     // state
     var name = ""
     var age = "0"
@@ -23,7 +21,7 @@ object AjaxExample {
     // our process method returns a
     // JsCmd which will be sent back to the browser
     // as part of the response
-    def process(): JsCmd= {
+    def process(): JsCmd = {
 
       // sleep for 400 millis to allow the user to
       // see the spinning icon
