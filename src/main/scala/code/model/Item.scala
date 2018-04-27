@@ -9,20 +9,91 @@ import json._
 
 import scala.xml.Node
 
+
+/**
+  * A helper that will JSON serialize BigDecimal
+  */
+object BigDecimalSerializer extends Serializer[BigDecimal] {
+  private val Class = classOf[BigDecimal]
+
+  // JValue --> Case Classes
+  def deserialize(implicit format: Formats): PartialFunction[(TypeInfo, JValue), BigDecimal] = {
+    case (TypeInfo(Class, _), json) => json match {
+      case JInt(iv) => BigDecimal(iv)
+      case JDouble(dv) => BigDecimal(dv)
+      case value => throw new MappingException("Can't convert " + value + " to " + Class)
+    }
+  }
+
+  //case classes --> JValue
+  def serialize(implicit format: Formats): PartialFunction[Any, JValue] = {
+    case d: BigDecimal => JDouble(d.doubleValue)
+  }
+}
+
+
+
 /**
  * An item in inventory
  */
-case class Item(id: String, name: String, 
-                description: String,
-                price: BigDecimal, taxable: Boolean,
-                weightInGrams: Int, qnty: Int)
+case class Item(
+  id: String,
+  name: String,
+  description: String,
+  price: BigDecimal,
+  taxable: Boolean,
+  weightInGrams: Int,
+  qnty: Int
+)
+
 
 /**
  * The Item companion object
  */
 object Item {
-  private implicit val formats =
-    net.liftweb.json.DefaultFormats + BigDecimalSerializer
+  // The raw data
+  private def data =
+    """[
+      {
+        "id": "1234", 
+        "name": "Cat Food",
+        "description": "Yummy, tasty cat food",
+        "price": 4.25,
+        "taxable": true,
+        "weightInGrams": 1000,
+        "qnty": 4
+      },
+      {
+        "id": "1235", 
+        "name": "Dog Food",
+        "description": "Yummy, tasty dog food",
+        "price": 7.25,
+        "taxable": true,
+        "weightInGrams": 5000,
+        "qnty": 72
+      },
+      {
+        "id": "1236", 
+        "name": "Fish Food",
+        "description": "Yummy, tasty fish food",
+        "price": 2,
+        "taxable": false,
+        "weightInGrams": 200,
+        "qnty": 45
+      },
+      {
+        "id": "1237", 
+        "name": "Sloth Food",
+        "description": "Slow, slow sloth food",
+        "price": 18.33,
+        "taxable": true,
+        "weightInGrams": 750,
+        "qnty": 62
+      },
+    ]
+    """
+  
+  private implicit val formats: Formats = net.liftweb.json.DefaultFormats + BigDecimalSerializer
 
   private var items: List[Item] = parse(data).extract[List[Item]]
 
@@ -48,14 +119,25 @@ object Item {
    * We needed to replicate it here because we
    * have overloaded unapply methods
    */
-  def unapply(in: Any): Option[(String, String, 
+  def unapply(in: Any): Option[(
+                                String, 
+                                String, 
                                 String,
-                                BigDecimal, Boolean,
-                                Int, Int)] = {
+                                BigDecimal, 
+                                Boolean,
+                                Int, 
+                                Int
+                              )] = {
     in match {
-      case i: Item => Some((i.id, i.name, i.description,
-                            i.price, i.taxable,
-                            i.weightInGrams, i.qnty))
+      case i: Item => Some((
+        i.id, 
+        i.name, 
+        i.description,
+        i.price, 
+        i.taxable,
+        i.weightInGrams, 
+        i.qnty
+      ))
       case _ => None
     }
   }
@@ -98,39 +180,7 @@ object Item {
    */
   def inventoryItems: Seq[Item] = items
 
-  // The raw data
-  private def data = 
-"""[
-  {"id": "1234", "name": "Cat Food",
-  "description": "Yummy, tasty cat food",
-  "price": 4.25,
-  "taxable": true,
-  "weightInGrams": 1000,
-  "qnty": 4
-  },
-  {"id": "1235", "name": "Dog Food",
-  "description": "Yummy, tasty dog food",
-  "price": 7.25,
-  "taxable": true,
-  "weightInGrams": 5000,
-  "qnty": 72
-  },
-  {"id": "1236", "name": "Fish Food",
-  "description": "Yummy, tasty fish food",
-  "price": 2,
-  "taxable": false,
-  "weightInGrams": 200,
-  "qnty": 45
-  },
-  {"id": "1237", "name": "Sloth Food",
-  "description": "Slow, slow sloth food",
-  "price": 18.33,
-  "taxable": true,
-  "weightInGrams": 750,
-  "qnty": 62
-  },
-]
-"""
+  
 
   /**
    * Select a random Item
@@ -212,21 +262,3 @@ object Item {
     
 }
 
-/**
- * A helper that will JSON serialize BigDecimal
- */
-object BigDecimalSerializer extends Serializer[BigDecimal] {
-  private val Class = classOf[BigDecimal]
-
-  def deserialize(implicit format: Formats): PartialFunction[(TypeInfo, JValue), BigDecimal] = {
-    case (TypeInfo(Class, _), json) => json match {
-      case JInt(iv) => BigDecimal(iv)
-      case JDouble(dv) => BigDecimal(dv)
-      case value => throw new MappingException("Can't convert " + value + " to " + Class)
-    }
-  }
-
-  def serialize(implicit format: Formats): PartialFunction[Any, JValue] = {
-    case d: BigDecimal => JDouble(d.doubleValue)
-  }
-}
