@@ -62,5 +62,6 @@ object FullRest extends RestHelper {
           Item.onChange(item => satisfyRequest(item: JValue))
         }
       }
-  })
+  }
+  )
 }

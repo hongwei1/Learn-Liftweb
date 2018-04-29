@@ -105,6 +105,7 @@ object Item {
   def apply(in: JValue): Box[Item] = Helpers.tryo{in.extract[Item]}
 
   /**
+    * These unapply can only be used in match{} and pattern matching. 
    * Extract a String (id) to an Item
    */
   def unapply(id: String): Option[Item] = Item.find(id)
@@ -144,6 +145,7 @@ object Item {
 
   /**
    * Convert an item to XML
+    * call the Xml.toXml implicitly. it will convert case class to xml node.
    */
   implicit def toXml(item: Item): Node = 
     <item>{Xml.toXml(item)}</item>

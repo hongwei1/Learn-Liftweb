@@ -45,15 +45,19 @@ class Boot {
       new Html5Properties(r.userAgent))    
 
     // the stateless REST handlers
-    LiftRules.statelessDispatchTable.append(BasicExample.findItem)
-    LiftRules.statelessDispatchTable.append(BasicExample.extractFindItem)
+    // Hooking up the handlers to Lift,
+    // Holds user's DispatchPF functions that will be executed in a stateless context. This means that
+    //   * no session will be created and no JSESSIONID cookie will be presented to the user (unless
+    //   * the user has presented a JSESSIONID cookie).
+    LiftRules.statelessDispatch.append(BasicExample.findItem)
+    LiftRules.statelessDispatch.append(BasicExample.extractFindItem)
 
     // stateful versions of the same
     // LiftRules.dispatch.append(BasicExample.findItem)
     // LiftRules.dispatch.append(BasicExample.extractFindItem)
 
-    LiftRules.statelessDispatchTable.append(BasicWithHelper)
-    LiftRules.statelessDispatchTable.append(FullRest)
+    LiftRules.statelessDispatch.append(BasicWithHelper)
+    LiftRules.statelessDispatch.append(FullRest)
 
     // stateful versions of the above
     // LiftRules.dispatch.append(BasicWithHelper)

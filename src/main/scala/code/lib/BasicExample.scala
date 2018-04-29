@@ -13,12 +13,12 @@ import http._
  */
 object BasicExample {
   /*
-   * Given a suffix and an item, make a LiftResponse
+   * Given a suffix and an item ==> a LiftResponse
    */
   private def toResponse(suffix: String, item: Item): LiftResponse =
     suffix match {
-      case "xml" => XmlResponse(item)
-      case _ => JsonResponse(item)
+      case "xml" => XmlResponse(item) // XmlResponse will accept : xml: Node, so we need transfer Item->XML implicitly. 
+      case _ => JsonResponse(item) //JsonResponse accpet: json: JsonAST.JValue
     }
 
   /**
@@ -31,12 +31,15 @@ object BasicExample {
     // 2rd : run the resulting function: () => Box[LiftResponse], and get the Box[LiftResponse] 
     // 3rd : if Box is full, it will send back to browser.
     
+    // each handler is a PartialFunction. We used shorthand for it. 
   lazy val findItem: LiftRules.DispatchPF = {
+    // ` type signature `of a request dispatch handler. before the  =>
     case Req(
       "simple" :: "item" :: itemId :: Nil, //  path  --->in.path.partPath
       suffix,    //suffix  --->  in.path.suffix
       GetRequest //Types: GET, POST, UPDATE --->in.requestType
     ) => 
+      
       () => Item.find(itemId).map(toResponse(suffix, _))
   }
 
@@ -45,6 +48,7 @@ object BasicExample {
    */
   lazy val extractFindItem: LiftRules.DispatchPF = {
     // path with extractor
+    // the pattern will not be matched unless that third element of the path is a valid Item.
     case Req(
       "simple2" :: "item" :: Item(item) :: Nil,  //This is the `path` 
       suffix,            // the suffix value.
