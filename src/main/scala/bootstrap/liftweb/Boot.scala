@@ -7,7 +7,7 @@ import common._
 import http._
 import sitemap._
 import Loc._
-import code.comet.BlogAPI
+import code.comet.{BlogAPI, ExampleClock}
 import net.liftmodules.JQueryModule
 import net.liftweb.http.js.jquery._
 
@@ -45,6 +45,16 @@ class Boot {
     // Force the request to be UTF-8
     LiftRules.early.append(_.setCharacterEncoding("UTF-8"))
 
+    LiftRules.cometCreation.append {
+      case CometCreationInfo("Clock",
+      name,
+      defaultXml,
+      attributes,
+      session) =>
+        new ExampleClock(session, Full("Clock"),
+          name, defaultXml, attributes)
+    }
+    
     //Init the jQuery module, see http://liftweb.net/jquery for more information.
     LiftRules.jsArtifacts = JQueryArtifacts
     JQueryModule.InitParam.JQuery=JQueryModule.JQuery1113
