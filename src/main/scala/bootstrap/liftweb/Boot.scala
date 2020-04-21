@@ -3,14 +3,12 @@ package bootstrap.liftweb
 import net.liftweb._
 import util._
 import Helpers._
-
 import common._
 import http._
 import js.jquery.JQueryArtifacts
 import sitemap._
-import Loc._
+import Loc.{FailMsg, _}
 import mapper._
-
 import lift.cookbook.model._
 import net.liftmodules.JQueryModule
 
@@ -22,11 +20,13 @@ import net.liftmodules.JQueryModule
 class Boot {
   def boot {
     if (!DB.jndiJdbcConnAvailable_?) {
-      val vendor = 
-	new StandardDBVendor(Props.get("db.driver") openOr "org.h2.Driver",
-			     Props.get("db.url") openOr 
-			     "jdbc:h2:lift_proto.db;AUTO_SERVER=TRUE",
-			     Props.get("db.user"), Props.get("db.password"))
+      val vendor =
+        new StandardDBVendor(
+          Props.get("db.driver") openOr "org.h2.Driver",
+          Props.get("db.url") openOr "jdbc:h2:lift_proto.db;AUTO_SERVER=TRUE",
+          Props.get("db.user"), 
+          Props.get("db.password")
+        )
 
       LiftRules.unloadHooks.append(vendor.closeAllConnections_! _)
 
@@ -41,14 +41,57 @@ class Boot {
     // where to search snippet
     LiftRules.addToPackages("lift.cookbook")
 
+    val canManage_? = If(
+      () => {true}, //if this return true, it will run the default page!!
+      () => RedirectResponse("/") //if it is false, it will run this page!!
+    )
+    val isAdmin_? = If(
+      () => {
+        //This  error will store the error messages into the S.errors and when frontend call `renderIdMsgs` it will show 
+        //these errors to the webpage
+//        S.error("isAdmin is error1");//TODO better know how this S.error work?? how can we show it in web page!!!
+//        S.error("isAdmin is error2");
+//        val string54: String = S ? ("Can't view now") ; //it seams just return a String value.
+//        println(string54);//just for testing
+//        println("isAdmin is not !!!");//just for testing
+        false}, 
+      () => 
+        RedirectWithState( //if it is false, it will run this way, to redirect !!
+        "/", 
+        MessageState("isAdmin is MessageState ->NoticeType.Warning" -> NoticeType.Error)//This also can be in Msg in frontend
+      )
+    )
+
+    // write a function by myself, and how the message or ...
+    val canShowSometimesPage_? = If(
+      () => (millis / 1000L / 60L) % 2 == 0, // 传入一个方法,true or false changed 
+      S ? ("Can't view now") // there is a implict method to convert string --> () => LiftwebResponse()
+    )
+
     // Build SiteMap
     def sitemap = SiteMap(
+      
       Menu.i("Home") / "index" >> User.AddUserMenusAfter, // the simple way to declare a menu
+      Menu.i("Sometimes") / "sometimes" >> canShowSometimesPage_?, //if False, you do not have the access to the html page!!!
+
+      Menu.i("List Contacts") / "contacts" / "list" ,
+      Menu.i("Create") / "contacts" / "create" >> canManage_?, //if `true` go ahead, if `false` go to other way, in the IF
+      Menu.i("Edit") / "contacts" / "edit" >> canManage_?, 
+      Menu.i("View") / "contacts" / "view" >> canManage_?,
+      Menu.i("Delete") / "contacts" / "delete" >> isAdmin_?, 
 
       // more complex because this menu allows anything in the
       // /static path to be visible
-      Menu(Loc("Static", Link(List("static"), true, "/static/index"), 
-	       "Static Content")))
+      Menu(
+        Loc("Static", 
+          Link(
+            List("static"), 
+            true, 
+            "/static/index"
+          ),
+        "Static Content")
+      )
+    )
 
     def sitemapMutators = User.sitemapMutator
 
@@ -77,7 +120,7 @@ class Boot {
 
     // Use HTML5 for rendering
     LiftRules.htmlProperties.default.set((r: Req) =>
-      new Html5Properties(r.userAgent))    
+      new Html5Properties(r.userAgent))
 
     // Make a transaction span the whole HTTP request
     S.addAround(DB.buildLoanWrapper)
