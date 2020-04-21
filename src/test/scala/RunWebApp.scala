@@ -1,21 +1,20 @@
+import RunWebApp.servletContextPath
 import org.eclipse.jetty.server.handler.ContextHandler
-import org.eclipse.jetty.server.nio.SelectChannelConnector
 import org.eclipse.jetty.server.{Handler, Server}
 import org.eclipse.jetty.webapp.WebAppContext
 
 object RunWebApp extends App {
-  val server = new Server
-  val scc = new SelectChannelConnector
-  scc.setPort(8080)
-  server.setConnectors(Array(scc))
+  val servletContextPath = "/"
+  val server = new Server(8080)
 
   val context = new WebAppContext()
   context.setServer(server)
-  context.setWar("src/main/webapp")
+  context.setContextPath(servletContextPath)
+  // current project absolute path
+  val basePath = this.getClass.getResource("/").toString .replaceFirst("target[/\\\\].*$", "")
+  context.setWar(s"${basePath}src/main/webapp")
 
-  val context0: ContextHandler = new ContextHandler()
-  context0.setHandler(context)
-  server.setHandler(context0)
+  server.setHandler(context)
 
   try {
     println(">>> STARTING EMBEDDED JETTY SERVER, PRESS ANY KEY TO STOP")
@@ -26,9 +25,9 @@ object RunWebApp extends App {
     server.stop()
     server.join()
   } catch {
-    case exc: Exception => {
+    case exc : Exception => {
       exc.printStackTrace()
-      System.exit(100)
+      sys.exit(100)
     }
   }
 }
