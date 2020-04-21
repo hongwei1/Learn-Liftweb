@@ -9,7 +9,7 @@ import js.jquery.JQueryArtifacts
 import sitemap._
 import Loc.{FailMsg, _}
 import mapper._
-import lift.cookbook.model._
+//import lift.cookbook.model._
 import net.liftmodules.JQueryModule
 
 
@@ -36,7 +36,7 @@ class Boot {
     // Use Lift's Mapper ORM to populate the database
     // you don't need to use Mapper to use Lift... use
     // any ORM you want
-    Schemifier.schemify(true, Schemifier.infoF _, User)
+//    Schemifier.schemify(true, Schemifier.infoF _, User)
 
     // where to search snippet
     LiftRules.addToPackages("lift.cookbook")
@@ -71,7 +71,7 @@ class Boot {
     // Build SiteMap
     def sitemap = SiteMap(
       
-      Menu.i("Home") / "index" >> User.AddUserMenusAfter, // the simple way to declare a menu
+      Menu.i("Home") / "index" ,//>> User.AddUserMenusAfter, // the simple way to declare a menu
       Menu.i("Sometimes") / "sometimes" >> canShowSometimesPage_?, //if False, you do not have the access to the html page!!!
 
       Menu.i("List Contacts") / "contacts" / "list" ,
@@ -93,11 +93,12 @@ class Boot {
       )
     )
 
-    def sitemapMutators = User.sitemapMutator
+//    def sitemapMutators = User.sitemapMutator
 
     // set the sitemap.  Note if you don't want access control for
     // each page, just comment this line out.
-    LiftRules.setSiteMapFunc(() => sitemapMutators(sitemap))
+//    LiftRules.setSiteMapFunc(() => sitemapMutators(sitemap))
+    LiftRules.setSiteMapFunc(() => sitemap)
 
     //Init the jQuery module, see http://liftweb.net/jquery for more information.
     LiftRules.jsArtifacts = JQueryArtifacts
@@ -116,7 +117,7 @@ class Boot {
     LiftRules.early.append(_.setCharacterEncoding("UTF-8"))
 
     // What is the function to test if a user is logged in?
-    LiftRules.loggedInTest = Full(() => User.loggedIn_?)
+//    LiftRules.loggedInTest = Full(() => User.loggedIn_?)
 
     // Use HTML5 for rendering
     LiftRules.htmlProperties.default.set((r: Req) =>
