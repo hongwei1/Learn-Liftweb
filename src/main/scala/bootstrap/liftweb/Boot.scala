@@ -18,6 +18,29 @@ import net.liftmodules.JQueryModule
  * to modify lift's environment
  */
 class Boot {
+
+  //This is the configurations for the google email server.
+  def configureMailer() {
+    
+    import javax.mail.{PasswordAuthentication ,Authenticator}
+
+    //1st: basic JAVA MAIL API to send emails.
+    System.setProperty("mail.smtp.starttls.enable", "true")
+    System.setProperty("mail.smtp.ssl.enable", "true")
+    System.setProperty("mail.smtp.host", "smtp.gmail.com")
+    System.setProperty("mail.smtp.auth", "true")
+
+    //2rd: Mailer is a build-in Lift object, contains utilities to send emails.
+    Mailer.authenticator =
+      for {
+        user <- Props.get("mail.user")
+        pass <- Props.get("mail.password")
+      } yield
+        new Authenticator {
+          override def getPasswordAuthentication = new PasswordAuthentication(user, pass)
+        }
+  }
+  
   def boot {
     if (!DB.jndiJdbcConnAvailable_?) {
       val vendor =
@@ -73,12 +96,13 @@ class Boot {
       
       Menu.i("Home") / "index" ,//>> User.AddUserMenusAfter, // the simple way to declare a menu
       Menu.i("Sometimes") / "sometimes" >> canShowSometimesPage_?, //if False, you do not have the access to the html page!!!
+      Menu.i("Send Email") / "send",
 
       Menu.i("List Contacts") / "contacts" / "list" ,
       Menu.i("Create") / "contacts" / "create" >> canManage_?, //if `true` go ahead, if `false` go to other way, in the IF
       Menu.i("Edit") / "contacts" / "edit" >> canManage_?, 
       Menu.i("View") / "contacts" / "view" >> canManage_?,
-      Menu.i("Delete") / "contacts" / "delete" >> isAdmin_?, 
+      Menu.i("Delete") / "contacts" / "delete" >> isAdmin_?,
 
       // more complex because this menu allows anything in the
       // /static path to be visible
@@ -125,5 +149,10 @@ class Boot {
 
     // Make a transaction span the whole HTTP request
     S.addAround(DB.buildLoanWrapper)
+
+    //configure the gmail during the boot.scala
+    //We only need to call this once, it it a singleton object. 
+    configureMailer()
+   
   }
 }
