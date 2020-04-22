@@ -9,7 +9,7 @@ import xml.{Elem, Text}
 object Animals {
 
   // this method accept the html and transfer and return the new html page.
-  def listsca = {
+  def list = {
     val animals = List(
       ("Dog", "(Canis lupus familiaris)"), 
       ("Cat", "(Felis catus)"), 

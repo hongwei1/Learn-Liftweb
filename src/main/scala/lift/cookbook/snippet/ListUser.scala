@@ -30,9 +30,5 @@ class ListUser extends Logger {
       }
     }
 
-  } match {
-    case bind: CssBind =>
-    case _ =>
-  }
-
+  } 
 }

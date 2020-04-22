@@ -97,6 +97,7 @@ class Boot {
       Menu.i("Home") / "index" ,//>> User.AddUserMenusAfter, // the simple way to declare a menu
       Menu.i("Sometimes") / "sometimes" >> canShowSometimesPage_?, //if False, you do not have the access to the html page!!!
       Menu.i("Send Email") / "send",
+      Menu.i("Danamical Table") / "danamically",
 
       Menu.i("List Contacts") / "contacts" / "list" ,
       Menu.i("Create") / "contacts" / "create" >> canManage_?, //if `true` go ahead, if `false` go to other way, in the IF
