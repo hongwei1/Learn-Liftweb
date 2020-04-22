@@ -2,8 +2,38 @@
     <h2 data-lift="Loc.i">welcome.text</h2>
 
     <p><span class="lift:Localization.dynamic"></span></p>
+
+    <hr>
+    <script> 
+        var myFunction = function () {
+            $("#cmd1").html("function to show how to send js commands from the server.");
+        } 
+    </script>
+
+    <h2>Sending a js command from the server</h2>
+<!--    // sever 发送一些 Js, 然后客户端执行!!!!-->
+    <p><span id="cmd1"></span>
+    <hr/>
+    <span id="cmd2"></span>
+    <hr/>
+    <span id="cmd3"></span>
+    <div id="cmd4"></div>
+    <script data-lift="JsCommand.jsCommand"></script>
+<!--  this jsCommand will generate the js from server, and send the code from server to the HTML page
+      the server will render the page ... 
+-->
+<!--    <script type="text/javascript">-->
+<!--        // <![CDATA[-->
+<!--        var fromServer = $("#cmd2").html("this string was sent from the server");-->
+<!--        myFunction();-->
+<!--        jQuery('#'+"cmd3").html("changing element content using Lift\u0027s JsCmds");-->
+<!--        // ]]>-->
+<!--    </script>-->
     
     
+    </p>
+    
+    <hr>
     <p>
 	<span class="lift:helloWorld.howdy">
 	  Welcome to your Lift app at <strong><span id="time" style="font-size:20px ">Time goes here</span></strong>
@@ -20,7 +50,7 @@
     <div data-lift="Calculator.plus"> 2 + 2 = <span id="result">some number</span></div>
     <hr>
     <div data-lift="Animals.list">
-        <ul >
+        <ul>
             <li>
                 <span class="name"></span> - <span class="sname"></span>
             </li>
