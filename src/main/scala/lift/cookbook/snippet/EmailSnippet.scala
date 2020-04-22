@@ -21,7 +21,9 @@ class EmailSnippet {
   }
 
   def sendEmail = {
-     //<a  href="?F1116140292205WMK1DF=_#">Send e-mail over Liftweb!</a> //TODO, you can think about how to call backend, just from this line!
+    <span data-lift="EmailSnippet.sendEmail"><!-- there will be a button here --></span>
+//    --> totally clean the <span tag, now we have the <a there
+    <a  href="?F1116140292205WMK1DF=_#">Send e-mail over Liftweb!</a> //TODO, you can think about how to call backend, just from this line!
     "*" #> SHtml.link( // this will create the <a element in html, and when you click the link, it will call the `sendNow()` method
       "#", 
       () => sendNow(), //

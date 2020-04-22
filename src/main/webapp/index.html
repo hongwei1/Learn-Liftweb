@@ -1,18 +1,30 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta content="text/html; charset=UTF-8" http-equiv="content-type" />
-    <title>Home</title>
-  </head>
-  <body class="lift:content_id=main">
-    <div id="main" class="lift:surround?with=default;at=content">
-      <h2>Welcome to your project!</h2>
-      <p>
+<div id="main" class="lift:surround?with=default;at=content">
+    <h2>Welcome to your project!</h2>
+    <p>
 	<span class="lift:helloWorld.howdy">
 	  Welcome to your Lift app at <strong><span id="time" style="font-size:20px ">Time goes here</span></strong>
 	</span>
-      </p>
+    </p>
+
+
+    <hr>
+    <!--    
+    data-lift when saw this data-lift, liftweb will search for the snippets to do the job!!!
+    if lift can not find page, it will show the error page!!
+    Calculator can be a snippet class or object there...
+    -->
+    <div data-lift="Calculator.plus"> 2 + 2 = <span id="result">some number</span></div>
+    <hr>
+    <div data-lift="Animals.list">
+        <ul >
+            <li>
+                <span class="name"></span> - <span class="sname"></span>
+            </li>
+        </ul>
     </div>
-  </body>
-</html>
+    <hr>
+</div>
+
+    
+   
 
