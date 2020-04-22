@@ -32,7 +32,7 @@ object Animals {
       animals.map {
         animal => // 每一行开始生成新的一行.
           ".name *" #> Text(animal._1) &  //if use *, just replace the content, it will keep the <Span
-            ".sname " #> Text(animal._2)// if not * there, replace everything, it will replace all with string. 会寻找所有的.sname 类,然后都全部替代他们...
+            ".sname *" #> Text(animal._2)// if not * there, replace everything, it will replace all with string. 会寻找所有的.sname 类,然后都全部替代他们...
       }
 
   }
