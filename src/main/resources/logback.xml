@@ -1,9 +1,11 @@
 <configuration>
-    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+<!--    this appender is the 标准命令行的日志: -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender"> 
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] [%-5level] %logger{36} - %msg%n</pattern>
         </encoder>
     </appender>
+<!--    这个是标准的文件路劲: -->
     <appender name="FILE" class="ch.qos.logback.core.FileAppender">
         <file>console.devmode.log</file>
         <append>true</append>
@@ -13,11 +15,11 @@
     </appender>
 
 
-
-    <logger name="code.snippet" level="info" />
-    
+<!--we can set different levels for different files.-->
+    <logger name="lift.cookbook.snippet" level="debug" />
     <logger name="net.liftweb" level="warn" />
     <logger name="bootstrap.liftweb" level="info" />
+    
     <root level="warn">
         <appender-ref ref="STDOUT" />
     </root>
