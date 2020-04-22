@@ -117,7 +117,15 @@ class Boot {
             "/static/index"
           ),
           S ? "menu.static")
-      )
+      ),
+      //added these links to the website, you can get the accesses there.
+//      http://localhost:8080/403
+//      http://localhost:8080/404
+//      http://localhost:8080/500
+      
+      Menu(Loc("403", "403" :: Nil, "403", Hidden)), 
+      Menu(Loc("404", "404" :: Nil, "404", Hidden)), 
+      Menu(Loc("500", "500" :: Nil, "500", Hidden))
 
 //      Menu.i("Home") / "index" >> LocGroup("content"), 
 //      Menu("Search") / "search" >> LocGroup("content"),
@@ -181,6 +189,35 @@ class Boot {
 
     //tell liftweb to find the international languages
     LiftRules.resourceNames = "i18n/resources" :: LiftRules.resourceNames
-   
+    
+    //simulated the error cases
+    //    http://localhost:8080/error-500
+    //    http://localhost:8080/error-403
+    //    http://localhost:8080/dont-exist
+    LiftRules.dispatch.append {
+      case Req("error-500" :: Nil, _, _) => {
+        () => {
+          Full(InternalServerErrorResponse())
+        }
+      }
+
+      case Req("error-403" :: Nil, _, _) => {
+        () => {
+          Full(ForbiddenResponse())
+        }
+      }
+    }
+
+    
+    //redirect the webpages according to the pages
+    LiftRules.responseTransformers.append { 
+      case r if r.toResponse.code == 403 => 
+        RedirectResponse("/403") 
+      case r if r.toResponse.code == 404 => 
+        RedirectResponse("/404") 
+      case r if r.toResponse.code == 500  => 
+        RedirectResponse("/500") 
+      case r => r
+    }
   }
 }
