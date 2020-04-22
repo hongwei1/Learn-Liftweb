@@ -95,7 +95,7 @@ class Boot {
     // Build SiteMap
     def sitemap = SiteMap(
       
-//      Menu.i("Home") / "index" ,//>> User.AddUserMenusAfter, // the simple way to declare a menu
+      Menu( S ? "menu.home") / "index" ,//>> User.AddUserMenusAfter, // the simple way to declare a menu
 //      Menu.i("Sometimes") / "sometimes" >> canShowSometimesPage_?, //if False, you do not have the access to the html page!!!
 //      Menu.i("Send Email") / "send",
 //      Menu.i("Danamical Table") / "danamically",
@@ -106,39 +106,39 @@ class Boot {
 //      Menu.i("Edit") / "contacts" / "edit" >> canManage_?, 
 //      Menu.i("View") / "contacts" / "view" >> canManage_?,
 //      Menu.i("Delete") / "contacts" / "delete" >> isAdmin_?,
-//
-//      // more complex because this menu allows anything in the
-//      // /static path to be visible
-//      Menu(
-//        Loc("Static", 
-//          Link(
-//            List("static"), 
-//            true, 
-//            "/static/index"
-//          ),
-//        "Static Content")
-//      )
 
-      Menu.i("Home") / "index" >> LocGroup("content"), 
-      Menu("Search") / "search" >> LocGroup("content"),
-      
-      Menu("Admin") / "admin"  >> LocGroup("content")
-        submenus(
-          Menu(Loc("List", List("list"), "List Contacts", isAdmin_?, LocGroup("admin"))),
-          Menu(Loc("Create", List("create"), "Create Contact", isAdmin_?, LocGroup("admin"))),
-          Menu(Loc("Edit", List("edit"), "Edit Contact", isAdmin_?, LocGroup("admin"))),
-          Menu(Loc("Delete", List("delete"), "Delete Contact", isAdmin_?, LocGroup("admin"))),
-          Menu(Loc("View", List("view"), "View Contact", isAdmin_?, LocGroup("admin")))
-        ),
-      
-      Menu("Contact Us") / "contact" >> LocGroup("footer"),
-      Menu("About Us") / "about" >> LocGroup("footer"),
-      // more complex because this menu allows anything in the // /static path to be visible 
+      // more complex because this menu allows anything in the
+      // /static path to be visible
       Menu(
-        Loc(
-          "Static", Link(List("static"), true, "/static/index"),
-          "Static Content",
-          LocGroup("content")))
+        Loc("Static", 
+          Link(
+            List("static"), 
+            true, 
+            "/static/index"
+          ),
+          S ? "menu.static")
+      )
+
+//      Menu.i("Home") / "index" >> LocGroup("content"), 
+//      Menu("Search") / "search" >> LocGroup("content"),
+//      
+//      Menu("Admin") / "admin"  >> LocGroup("content")
+//        submenus(
+//          Menu(Loc("List", List("list"), "List Contacts", isAdmin_?, LocGroup("admin"))),
+//          Menu(Loc("Create", List("create"), "Create Contact", isAdmin_?, LocGroup("admin"))),
+//          Menu(Loc("Edit", List("edit"), "Edit Contact", isAdmin_?, LocGroup("admin"))),
+//          Menu(Loc("Delete", List("delete"), "Delete Contact", isAdmin_?, LocGroup("admin"))),
+//          Menu(Loc("View", List("view"), "View Contact", isAdmin_?, LocGroup("admin")))
+//        ),
+//      
+//      Menu("Contact Us") / "contact" >> LocGroup("footer"),
+//      Menu("About Us") / "about" >> LocGroup("footer"),
+//      // more complex because this menu allows anything in the // /static path to be visible 
+//      Menu(
+//        Loc(
+//          "Static", Link(List("static"), true, "/static/index"),
+//          "Static Content",
+//          LocGroup("content")))
     )
 
 //    def sitemapMutators = User.sitemapMutator
@@ -177,6 +177,10 @@ class Boot {
     //configure the gmail during the boot.scala
     //We only need to call this once, it it a singleton object. 
     configureMailer()
+
+
+    //tell liftweb to find the international languages
+    LiftRules.resourceNames = "i18n/resources" :: LiftRules.resourceNames
    
   }
 }
