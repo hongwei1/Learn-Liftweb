@@ -98,6 +98,7 @@ class Boot {
       Menu.i("Sometimes") / "sometimes" >> canShowSometimesPage_?, //if False, you do not have the access to the html page!!!
       Menu.i("Send Email") / "send",
       Menu.i("Danamical Table") / "danamically",
+      Menu.i("Nesting Snippets") / "nesting",
 
       Menu.i("List Contacts") / "contacts" / "list" ,
       Menu.i("Create") / "contacts" / "create" >> canManage_?, //if `true` go ahead, if `false` go to other way, in the IF
