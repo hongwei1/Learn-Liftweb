@@ -1,30 +1,19 @@
 <div id="main" class="lift:surround?with=default;at=content">
-    
-    
-    <h1>Creating forms</h1>
-    <div class="lift:SinglePageForm"></div>
-    
-    <hr>
-    <h1 data-lift="Loc.i">welcome.text</h1>
 
-    <p><span class="lift:Localization.dynamic"></span></p>
-
-    <hr>
+    <h2>Sending a js command from the server</h2>
+    <!--    // sever 发送一些 Js, 然后客户端执行!!!!-->
     <script>
         var myFunction = function () {
             $("#cmd1").html("function to show how to send js commands from the server.");
         }
     </script>
-
-    <h2>Sending a js command from the server</h2>
-    <!--    // sever 发送一些 Js, 然后客户端执行!!!!-->
     <p><span id="cmd1"></span>
     <hr/>
     <span id="cmd2"></span>
     <hr/>
     <span id="cmd3"></span>
     <div id="cmd4"></div>
-<!--    <script data-lift="JsCommand.jsCommand"></script>-->
+    <!--    <script data-lift="JsCommand.jsCommand"></script>-->
     <!--  this jsCommand will generate the js from server, and send the code from server to the HTML page
           the server will render the page ... 
     -->
@@ -41,19 +30,19 @@
 
     <hr>
     <h1>AJax </h1>
-<!--    each time, when you refresch the home page, lift will call the jsFunction, and create the Ajax function as following:-->
-<!--    <span class="lift:JsCommand.jsFunction"></span>-->
-<!--    and the following are the same thing-->
-<!--    <span data-lift="JsCommand.jsFunction"></span>-->
-<!--each time, when you refresh the home page, it will generate the following script by liftweb:-->
-<!--    <script type="text/javascript">-->
-<!--        // <![CDATA[-->
-<!--        function ajaxDeletePeople(person) {-->
-<!--            liftAjax.lift_ajaxHandler('F7625200364944RMKZ3=' + encodeURIComponent(JSON.stringify(person)), null, null, null);-->
-<!--        }-->
+    <!--    each time, when you refresch the home page, lift will call the jsFunction, and create the Ajax function as following:-->
+    <!--    <span class="lift:JsCommand.jsFunction"></span>-->
+    <!--    and the following are the same thing-->
+    <!--    <span data-lift="JsCommand.jsFunction"></span>-->
+    <!--each time, when you refresh the home page, it will generate the following script by liftweb:-->
+    <!--    <script type="text/javascript">-->
+    <!--        // <![CDATA[-->
+    <!--        function ajaxDeletePeople(person) {-->
+    <!--            liftAjax.lift_ajaxHandler('F7625200364944RMKZ3=' + encodeURIComponent(JSON.stringify(person)), null, null, null);-->
+    <!--        }-->
 
-<!--        // ]]>-->
-<!--    </script>-->
+    <!--        // ]]>-->
+    <!--    </script>-->
 
     <div>
         <select id="person">
@@ -66,14 +55,14 @@
         <button>Delete Selected</button>
     </div>
 
-<!--    <script> -->
-<!--        $(document).ready(function () {-->
-<!--            $("button").click(function () {-->
-<!--                ajaxDeletePeople($("#person").val()); // this function is generate by liftweb:-->
-<!--            });-->
-<!--        }); -->
-<!--    </script>-->
-    
+    <!--    <script> -->
+    <!--        $(document).ready(function () {-->
+    <!--            $("button").click(function () {-->
+    <!--                ajaxDeletePeople($("#person").val()); // this function is generate by liftweb:-->
+    <!--            });-->
+    <!--        }); -->
+    <!--    </script>-->
+
     <hr>
     <p>
 	<span class="lift:helloWorld.howdy">

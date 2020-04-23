@@ -96,7 +96,8 @@ class Boot {
     def sitemap = SiteMap(
       
       Menu( S ? "menu.home") / "index" ,//>> User.AddUserMenusAfter, // the simple way to declare a menu
-//      Menu.i("Sometimes") / "sometimes" >> canShowSometimesPage_?, //if False, you do not have the access to the html page!!!
+      Menu.i("chapter3.2 Creating forms") / "Chapter3.2" , //if False, you do not have the access to the html page!!!
+      Menu.i("chapter3.3 Creating an Ajax form") / "Chapter3.3" , //if False, you do not have the access to the html page!!!
 //      Menu.i("Send Email") / "send",
 //      Menu.i("Danamical Table") / "danamically",
 //      Menu.i("Nesting Snippets") / "nesting",

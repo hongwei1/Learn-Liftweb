@@ -1,0 +1,62 @@
+<div id="main" class="lift:surround?with=default;at=content">
+    <h1>3.3 Creating an Ajax form</h1>
+    <p>Ajax is so cool. Just cost 8ms, but normal form need the whole page, which is not good, 300ms</p>
+    <hr>
+    <div class="lift:Msgs?showAll=true"></div>
+<!--    this`lift:Msgs?showAll=true` will be replaced as the following: -->
+<!--    <div id="lift__noticesContainer__">-->
+<!--        <div id="lift__noticesContainer___warning">-->
+<!--            <ul>-->
+<!--                <li>Subject should have at least 10 chars and have no more than 140.</li>-->
+<!--            </ul>-->
+<!--        </div>-->
+<!--    </div>-->
+
+    <!--    this is tell liftweb ,following will use the Ajax stuff. -->
+    <form class="lift:form.ajax"> 
+<!--        
+The lift will create the form tag and it also added an `onsubmit` attribute to it , which is an Ajax Handler. 
+<form id="F2506649547422RDOLZ" 
+    action="javascript://" 
+    onsubmit="liftAjax.lift_ajaxHandler(jQuery ('#'+&quot;F2506649547422RDOLZ&quot;).serialize(), null, null, &quot;javascript&quot;);return false;">
+-->
+<!--        表单包含不同类型的 input元素,复选框,单选框,提交按钮等...-->
+        <!--        When reload the page, will call these lift method to render the html page-->
+        <div class="lift:AjaxForm.form">
+
+<!--            Name 属性  如果要正确地被提交，每个输入字段必须设置一个 name 属性。-->
+<!--            server side only know the `name` field, not others ...-->
+<!--            label 会让对应那个 field 的点击域变宽了!!!-->
+            <div>
+                <label for="from">From:</label> 
+                <input type="text" id="from">
+            </div>
+            <!--            lift will change it to the following: -->
+            <!--            <div>-->
+            <!--                <label for="from">From:</label>-->
+            <!--                <input name="F1397868377296TYQAU0" type="text" id="from" value="">-->
+            <!--            </div>-->
+            <div>
+                <label for="subject">Subject:</label>
+                <input type="text" id="subject">
+            </div>
+
+            <div>
+                <label for="message">Message:</label>
+                <textarea id="message" cols="10" rows="8"></textarea>
+            </div>
+
+            <div>
+                <input type="submit" value="Submit">
+<!--     Button will not submit the form, only the input can do it ...           -->
+<!--                <button type="button" > this a button</button>-->
+<!--                <input type="button" onclick="alert('Hello World!')" value="Button2">-->
+            </div>
+        </div>
+    </form>
+
+</div>
+
+    
+   
+
