@@ -4,14 +4,14 @@
     <p><span class="lift:Localization.dynamic"></span></p>
 
     <hr>
-    <script> 
+    <script>
         var myFunction = function () {
             $("#cmd1").html("function to show how to send js commands from the server.");
-        } 
+        }
     </script>
 
     <h2>Sending a js command from the server</h2>
-<!--    // sever 发送一些 Js, 然后客户端执行!!!!-->
+    <!--    // sever 发送一些 Js, 然后客户端执行!!!!-->
     <p><span id="cmd1"></span>
     <hr/>
     <span id="cmd2"></span>
@@ -19,19 +19,54 @@
     <span id="cmd3"></span>
     <div id="cmd4"></div>
     <script data-lift="JsCommand.jsCommand"></script>
-<!--  this jsCommand will generate the js from server, and send the code from server to the HTML page
-      the server will render the page ... 
--->
+    <!--  this jsCommand will generate the js from server, and send the code from server to the HTML page
+          the server will render the page ... 
+    -->
+    <!--    <script type="text/javascript">-->
+    <!--        // <![CDATA[-->
+    <!--        var fromServer = $("#cmd2").html("this string was sent from the server");-->
+    <!--        myFunction();-->
+    <!--        jQuery('#'+"cmd3").html("changing element content using Lift\u0027s JsCmds");-->
+    <!--        // ]]>-->
+    <!--    </script>-->
+
+
+    </p>
+
+    <hr>
+    <h1>AJax </h1>
+<!--    each time, when you refresch the home page, lift will call the jsFunction, and create the Ajax function as following:-->
+    <span class="lift:JsCommand.jsFunction"></span>
+<!--    and the following are the same thing-->
+<!--    <span data-lift="JsCommand.jsFunction"></span>-->
+<!--each time, when you refresh the home page, it will generate the following script by liftweb:-->
 <!--    <script type="text/javascript">-->
 <!--        // <![CDATA[-->
-<!--        var fromServer = $("#cmd2").html("this string was sent from the server");-->
-<!--        myFunction();-->
-<!--        jQuery('#'+"cmd3").html("changing element content using Lift\u0027s JsCmds");-->
+<!--        function ajaxDeletePeople(person) {-->
+<!--            liftAjax.lift_ajaxHandler('F7625200364944RMKZ3=' + encodeURIComponent(JSON.stringify(person)), null, null, null);-->
+<!--        }-->
+
 <!--        // ]]>-->
 <!--    </script>-->
-    
-    
-    </p>
+
+    <div>
+        <select id="person">
+            <option value="Carly">Carly</option>
+            <option value="Joe">Joe</option>
+            <option value="John">John</option>
+            <option value="Mary">Mary</option>
+        </select>
+
+        <button>Delete Selected</button>
+    </div>
+
+    <script> 
+        $(document).ready(function () {
+            $("button").click(function () {
+                ajaxDeletePeople($("#person").val()); // this function is generate by liftweb:
+            });
+        }); 
+    </script>
     
     <hr>
     <p>
