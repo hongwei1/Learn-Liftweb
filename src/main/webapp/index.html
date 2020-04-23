@@ -1,5 +1,11 @@
 <div id="main" class="lift:surround?with=default;at=content">
-    <h2 data-lift="Loc.i">welcome.text</h2>
+    
+    
+    <h1>Creating forms</h1>
+    <div class="lift:SinglePageForm"></div>
+    
+    <hr>
+    <h1 data-lift="Loc.i">welcome.text</h1>
 
     <p><span class="lift:Localization.dynamic"></span></p>
 
@@ -18,7 +24,7 @@
     <hr/>
     <span id="cmd3"></span>
     <div id="cmd4"></div>
-    <script data-lift="JsCommand.jsCommand"></script>
+<!--    <script data-lift="JsCommand.jsCommand"></script>-->
     <!--  this jsCommand will generate the js from server, and send the code from server to the HTML page
           the server will render the page ... 
     -->
@@ -36,7 +42,7 @@
     <hr>
     <h1>AJax </h1>
 <!--    each time, when you refresch the home page, lift will call the jsFunction, and create the Ajax function as following:-->
-    <span class="lift:JsCommand.jsFunction"></span>
+<!--    <span class="lift:JsCommand.jsFunction"></span>-->
 <!--    and the following are the same thing-->
 <!--    <span data-lift="JsCommand.jsFunction"></span>-->
 <!--each time, when you refresh the home page, it will generate the following script by liftweb:-->
@@ -60,13 +66,13 @@
         <button>Delete Selected</button>
     </div>
 
-    <script> 
-        $(document).ready(function () {
-            $("button").click(function () {
-                ajaxDeletePeople($("#person").val()); // this function is generate by liftweb:
-            });
-        }); 
-    </script>
+<!--    <script> -->
+<!--        $(document).ready(function () {-->
+<!--            $("button").click(function () {-->
+<!--                ajaxDeletePeople($("#person").val()); // this function is generate by liftweb:-->
+<!--            });-->
+<!--        }); -->
+<!--    </script>-->
     
     <hr>
     <p>
